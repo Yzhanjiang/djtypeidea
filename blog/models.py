@@ -28,7 +28,9 @@ class Post(models.Model):
     class Meta:
         verbose_name = verbose_name_plural = '分类'
 
-    class Category(models.Model):
+
+
+class Category(models.Model):
         STATUS_ITEMS = (
             (1,"可用"),
             (2,"删除")
@@ -42,11 +44,11 @@ class Post(models.Model):
         class Meta:
             verbose_name = verbose_name_plural = "分类"
 
-    class Tag(models.Model):
-        STATUS_ITEMS = (
-            (1,'正常'),
-            (2,'删除'),
-        )
+class Tag(models.Model):
+    STATUS_ITEMS = (
+        (1,'正常'),
+        (2,'删除'),
+    )
     name = models.CharField(max_length=10,verbose_name="名称")
     status = models.PositiveIntegerField(default=1,choices=STATUS_ITEMS,verbose_name="状态")
     owner = models.ForeignKey(User,verbose_name="作者")
