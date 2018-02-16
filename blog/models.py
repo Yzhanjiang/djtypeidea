@@ -11,7 +11,7 @@ from django.db import  models
 class Post(models.Model):
     STATUS_ITEMS = (
         (1,'上线'),
-        (2,'草稿'),
+        # (2,'草稿'),
         (3,'删除'),
     )
     title = models.CharField(max_length=50,verbose_name="标题")

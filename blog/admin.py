@@ -8,9 +8,14 @@ from django.utils.html import format_html
 
 from  .models import Post,Category,Tag
 from djtypeidea.custom_site import custom_site
+from  .adminforms import PostAdminForm
+
+
 
 @admin.register(Post, site=custom_site)
 class PostAdmin(admin.ModelAdmin):
+    form = PostAdminForm
+
     list_display = [
         'title','category','status','content','owner',
         'create_time','operator'
@@ -30,7 +35,7 @@ class PostAdmin(admin.ModelAdmin):
     # exclude = 'owner'
     fieldsets = (# 跟fields互斥
         ('基础配置',{
-            'fields':(('category','title'),'content')
+            'fields':(('category','title'),'content','status')
                  }),
         ('高级配置',{
             'classes':('collapse','addon'),
@@ -49,9 +54,17 @@ class PostAdmin(admin.ModelAdmin):
     operator.allow_tags = True
     operator.short_description = '操作'
 
+
+class PostInlineAdmin(admin.TabularInline):  # StackedInline  样式不同
+    fields = ('title', 'desc','owner')
+    extra = 3  # 控制额外多几个
+    model = Post
+
 @admin.register(Category, site=custom_site)
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    inlines = [
+        PostInlineAdmin,
+    ]
 
 @admin.register(Tag, site=custom_site)
 class TagAdmin(admin.ModelAdmin):
