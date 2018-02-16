@@ -9,11 +9,11 @@ from django.utils.html import format_html
 from  .models import Post,Category,Tag
 from djtypeidea.custom_site import custom_site
 from  .adminforms import PostAdminForm
-
+from djtypeidea.custom_admin import BaseOwnerAdmin
 
 
 @admin.register(Post, site=custom_site)
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(BaseOwnerAdmin):
     form = PostAdminForm
 
     list_display = [
@@ -21,11 +21,21 @@ class PostAdmin(admin.ModelAdmin):
         'create_time','operator'
         ]
     list_filter = ['title','owner']
-    # list_display_links = ['category','status']
+
+    fields = (
+            ('category', 'title'),
+            'content',
+            'status',
+            'tags',
+    )
     search_fields = ['title','category__name']
     save_on_top = True
-    show_full_result_count = False
-    date_hierarchy = 'create_time'
+
+
+    # list_display_links = ['category','status']
+
+    # show_full_result_count = False
+    # date_hierarchy = 'create_time'
     # list_editable = ('title',)
 
     # fields = (
@@ -33,16 +43,16 @@ class PostAdmin(admin.ModelAdmin):
     #     'content'
     # )
     # exclude = 'owner'
-    fieldsets = (# 跟fields互斥
-        ('基础配置',{
-            'fields':(('category','title'),'content','status')
-                 }),
-        ('高级配置',{
-            'classes':('collapse','addon'),
-            'fields':('tags',),
-        }),
-        )
-    filter_horizontal = ('tags',)
+    # fieldsets = (# 跟fields互斥
+    #     ('基础配置',{
+    #         'fields':(('category','title'),'content','status')
+    #              }),
+    #     ('高级配置',{
+    #         'classes':('collapse','addon'),
+    #         'fields':('tags',),
+    #     }),
+    #     )
+    # filter_horizontal = ('tags',)
 
 
     def operator(self, obj):
@@ -55,20 +65,32 @@ class PostAdmin(admin.ModelAdmin):
     operator.short_description = '操作'
 
 
-class PostInlineAdmin(admin.TabularInline):  # StackedInline  样式不同
-    fields = ('title', 'desc','owner')
-    extra = 3  # 控制额外多几个
-    model = Post
+# class PostInlineAdmin(admin.TabularInline):  # StackedInline  样式不同
+#     fields = ('title', 'desc','owner')
+#     extra = 3  # 控制额外多几个
+#     model = Post
 
 @admin.register(Category, site=custom_site)
-class CategoryAdmin(admin.ModelAdmin):
-    inlines = [
-        PostInlineAdmin,
-    ]
+class CategoryAdmin(BaseOwnerAdmin):
+    list_display = ('name', 'status', 'is_nav', 'created_time')
+    fields = (
+        'name', 'status',
+        'is_nav',
+    )
+
+
+    # inlines = [
+    #     PostInlineAdmin,
+    # ]
+
+
 
 @admin.register(Tag, site=custom_site)
-class TagAdmin(admin.ModelAdmin):
-    pass
+class TagAdmin(BaseOwnerAdmin):
+    list_display = ('name', 'status', 'create_time')
+    fields = (
+        'name', 'status'
+    )
 
 # admin.site.register(Post,PostAdmin)
 # admin.site.register(Category,CategoryAdmin)
