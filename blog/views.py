@@ -13,6 +13,32 @@ from django.http import  Http404
 
 from django.core.paginator import Paginator,EmptyPage
 
+def get_common_context():
+    categories = Category.objects.filter(status=1)
+    nav_cates = []
+    cates = []
+    for cate in categories:
+        if cate.is_nav:
+            nav_cates.append(cate)
+        else:
+            cates.append(cate)
+
+    side_bars = SideBar.objects.filter(status=1)
+
+    recently_posts = Post.objects.filter(status=1)[:10]
+    # hot_posts = Post.objects.filter(status=1).order_by('views')[:10]
+    recently_comments = Comment.objects.filter(status=1)[:10]
+
+    context = {
+        'nav_cates': nav_cates,
+        'cates': cates,
+        'side_bars': side_bars,
+        'recently_posts': recently_posts,
+        'recently_comments': recently_comments,
+    }
+
+    return  context
+
 
 
 def post_list(request,category_id=None,tag_id=None):
@@ -41,30 +67,32 @@ def post_list(request,category_id=None,tag_id=None):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
 
-    categories = Category.objects.filter(status=1)
-    nav_cates = []
-    cates = []
-    for cate in categories:
-        if cate.is_nav:
-            nav_cates.append(cate)
-        else:
-            cates.append(cate)
-
-    side_bars = SideBar.objects.filter(status = 1)
-
-    recently_posts = Post.objects.filter(status=1)[:10]
-    # hot_posts = Post.objects.filter(status=1).order_by('views')[:10]
-    recently_comments = Comment.objects.filter(status=1)[:10]
-
+    # categories = Category.objects.filter(status=1)
+    # nav_cates = []
+    # cates = []
+    # for cate in categories:
+    #     if cate.is_nav:
+    #         nav_cates.append(cate)
+    #     else:
+    #         cates.append(cate)
+    #
+    # side_bars = SideBar.objects.filter(status = 1)
+    #
+    # recently_posts = Post.objects.filter(status=1)[:10]
+    # # hot_posts = Post.objects.filter(status=1).order_by('views')[:10]
+    # recently_comments = Comment.objects.filter(status=1)[:10]
 
     context = {
         'posts': posts,
-        'nav_cates':nav_cates,
-        'cates':cates,
-        'side_bars':side_bars,
-        'recently_posts':recently_posts,
-        'recently_comments':recently_comments,
+        # 'nav_cates':nav_cates,
+        # 'cates':cates,
+        # 'side_bars':side_bars,
+        # 'recently_posts':recently_posts,
+        # 'recently_comments':recently_comments,
     }
+    common_context = get_common_context()
+    context.update(common_context)
+
     return  render(request,'blog/list.html',context=context)
 
 
@@ -91,12 +119,14 @@ def post_detail(request,pk=None):
 
     context = {
         'post': post,
-        'nav_cates': nav_cates,
-        'cates': cates,
-        'side_bars': side_bars,
-        'recently_posts': recently_posts,
-        'recently_comments': recently_comments,
+        # 'nav_cates': nav_cates,
+        # 'cates': cates,
+        # 'side_bars': side_bars,
+        # 'recently_posts': recently_posts,
+        # 'recently_comments': recently_comments,
     }
+    common_context = get_common_context()
+    context.update(common_context)
 
 
     return render(request,'blog/detail.html',context=context)
