@@ -51,14 +51,17 @@ def post_list(request,category_id=None,tag_id=None):
     except TypeError:
         page = 1
     if category_id :
+        #分类页面
         queryset = queryset.filter(category_id=category_id)
     elif tag_id:
+        #标签页面
         try:
             tag = Tag.objects.get(id=tag_id)
         except Tag.DoesNotExist:
             queryset = []
         else:
             queryset = tag.posts.all()
+
     else:
         queryset = Post.objects.all()
     paginator = Paginator(queryset, page_size)

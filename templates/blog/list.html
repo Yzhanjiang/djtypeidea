@@ -9,9 +9,12 @@
         {% for post in posts %}
             <li>
             title :<a href="{% url 'detail' post.id %}" >{{ post.title }}</a><br>
+            <!--  title :<a href="/post/{{ post.id }}" >{{ post.title }}</a><br>  -->
             desc :{{ post.desc }}
             </li>
         {% endfor %}
+
+
 
         {% if posts.has_previous %}<a href="?page={{ posts.number|add:"-1" }}">上一页</a>  {% endif %}
         Page {{ posts.number }}  of {{ posts.paginator.num_pages }}
