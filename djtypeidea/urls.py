@@ -18,6 +18,8 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from .custom_site import custom_site
+from  comment.views import  CommentView
+
 
 from blog.views import post_list,post_detail,index
 from blog.views import IndexView,CategoryView,TagView,PostView,AuthorView
@@ -40,6 +42,7 @@ urlpatterns = [
 
 
     url(r'links/$',LinkView.as_view(),name="links"),
+    url(r'comment/$',CommentView.as_view(),name="comment"),
     url(r'^admin/', admin.site.urls),
     url(r'^cus_admin/', custom_site.urls),
 ]

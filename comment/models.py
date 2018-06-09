@@ -12,10 +12,11 @@ from blog.models import Post
 class Comment(models.Model):
     STATUS_ITEMS = (
         (1,'正常'),
-        (1,'删除'),
+        (0,'删除'),
     )
-    post = models.ForeignKey(Post,verbose_name="文章")
-    content = models.CharField(max_length=2000,verbose_name="内容")
+    # post = models.ForeignKey(Post,verbose_name="文章")
+    target = models.CharField(max_length=200,null=True,verbose_name="评论目标")
+    content = models.CharField(max_length=2000,null=True,verbose_name="内容")
     nickname = models.CharField(max_length=50,verbose_name="昵称")
     website = models.URLField(verbose_name="网站")
     email = models.EmailField(verbose_name="邮箱")

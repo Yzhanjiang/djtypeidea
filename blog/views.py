@@ -13,6 +13,9 @@ from django.core.paginator import Paginator,EmptyPage
 
 from django.views.generic import ListView,DetailView
 from django.conf import  settings
+from comment.models import Comment
+from comment.forms import CommentForm
+
 
 ####################class view
 class CommonMixin(object):
@@ -112,8 +115,12 @@ class PostView(CommonMixin,DetailView):
     template_name = settings.THEME + '/blog/detail.html'
     context_object_name = 'post'
 
+    def get_context_data(self,**kwargs):
+        kwargs.update({
+            'comment_from':CommentForm()
+        })
 
-
+        return  super(PostView,self).get_context_data(**kwargs)
 
 
 
