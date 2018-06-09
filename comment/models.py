@@ -12,7 +12,7 @@ from blog.models import Post
 class Comment(models.Model):
     STATUS_ITEMS = (
         (1,'正常'),
-        (0,'删除'),
+        (2,'删除'),
     )
     # post = models.ForeignKey(Post,verbose_name="文章")
     target = models.CharField(max_length=200,null=True,verbose_name="评论目标")
