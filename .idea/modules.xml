@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://D:\Django\1111111111111111111\.idea\1111111111111111111.iml" filepath="D:\Django\1111111111111111111\.idea\1111111111111111111.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../1111111111111111111/.idea/1111111111111111111.iml" filepath="$PROJECT_DIR$/../1111111111111111111/.idea/1111111111111111111.iml" />
+      <module fileurl="file://F:/PythonLx/.idea/PythonLx.iml" filepath="F:/PythonLx/.idea/PythonLx.iml" />
+      <module fileurl="file://F:/jumpserver/coco/.idea/coco.iml" filepath="F:/jumpserver/coco/.idea/coco.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/djtypeidea.iml" filepath="$PROJECT_DIR$/.idea/djtypeidea.iml" />
+      <module fileurl="file://F:/jumpserver/jump/.idea/jump.iml" filepath="F:/jumpserver/jump/.idea/jump.iml" />
     </modules>
   </component>
 </project>

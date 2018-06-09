@@ -26,6 +26,9 @@ class CommonMixin(object):
                 nav_cates.append(cate)
             else:
                 cates.append(cate)
+
+        print(nav_cates)
+        print("555555555555555555555555")
         return {
             'nav_cates': nav_cates,
             'cates': cates,
@@ -59,7 +62,8 @@ class BasePostsView(CommonMixin,ListView):
     model = Post
     template_name = settings.THEME + '/blog/list.html'
     context_object_name = 'posts'
-    paginate_by = 2
+    paginate_by = 3
+    allow_empty = True
 
 class IndexView(BasePostsView):
    pass
