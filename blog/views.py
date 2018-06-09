@@ -15,7 +15,7 @@ from django.views.generic import ListView,DetailView
 from django.conf import  settings
 from comment.models import Comment
 from comment.forms import CommentForm
-
+from comment.views import CommentShowMinix
 
 ####################class view
 class CommonMixin(object):
@@ -110,14 +110,22 @@ class TagView(BasePostsView):
         posts = tag.posts.all()
         return posts
 
-class PostView(CommonMixin,DetailView):
+class PostView(CommonMixin,DetailView,CommentShowMinix):
     model = Post
     template_name = settings.THEME + '/blog/detail.html'
     context_object_name = 'post'
 
+    def get_comments(self):
+        target = self.request.path
+        comments = Comment.objects.filter(target=target)
+
+        return comments
+
     def get_context_data(self,**kwargs):
+
         kwargs.update({
-            'comment_from':CommentForm()
+            'comment_from':CommentForm(),
+            'comment_list':self.get_comments(),
         })
 
         return  super(PostView,self).get_context_data(**kwargs)

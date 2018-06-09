@@ -44,4 +44,4 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ['nickname','email','website','content']
+        fields = ['target','nickname','email','website','content']
