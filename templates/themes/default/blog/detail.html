@@ -28,18 +28,8 @@
         {{post.content}}
 
     </article>
-<hr>
-
-<div class="comment">
-    <form action="/comment/" method="POST">
-        {% csrf_token %}
-         <input name="target" type="hidden" value="{{request.path}}">
-        {{comment_from}}
-    <input type="submit" value="写好了"/>
-
-    </form>
 
 
-</div>
+{% include 'themes/default/comment/block.html' %}
 
 {% endblock %}
