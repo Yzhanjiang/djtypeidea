@@ -71,14 +71,28 @@
 	</div>
 
 	<div class="container">
+        <div class="col-9">
+            <nav class="nav cotegory"  style="border-bottom:2px solid #ccc;padding-bottom: 3px">
+                <a href="/">首页</a>
+                    {% for cate in nav_cates %}
+                    <a href="{% url 'category' cate.id %}" >{{ cate.name }} </a>
+                    {% endfor %}
+                <a>test</a>
+            </nav>
+        </div>
 
-		<nav class="nav cotegory"  style="border-bottom:2px solid #ccc;padding-bottom: 3px">
-            <a href="/">首页</a>
-                {% for cate in nav_cates %}
-                <a href="{% url 'category' cate.id %}" >{{ cate.name }} </a>
-                {% endfor %}
-            <a>test</a>
-        </nav>
+        <div class="col-3">
+            <div >
+                <form action="/" method="GET" class="input-group search" >
+                    <input type="text" name = "query" class="form-control" placeholder="search" >
+                    <span class="input-group-btn">
+                        <input type="submit" class="btn btn-secondary" value="Go!"></input>
+                    </span>
+                 </form>
+
+            </div>
+        </div>
+
 
 	</div>
 

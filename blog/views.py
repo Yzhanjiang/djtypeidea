@@ -66,7 +66,17 @@ class BasePostsView(CommonMixin,ListView):
     allow_empty = True
 
 class IndexView(BasePostsView):
-   pass
+   def get_queryset(self):
+       query = self.request.GET.get('query')
+       print(query)
+       qs = super(IndexView, self).get_queryset()
+       if not query:
+           return  qs
+       return  qs.filter(title__icontains=query) #select * from blog_post where  title ilike "%query%"
+
+   def get_context_data(self, **kwargs):
+       query = self.request.GET.get('query')
+       return super(IndexView,self).get_context_data(query=query)
 
 class CategoryView(BasePostsView):
     def get_queryset(self):
@@ -75,8 +85,10 @@ class CategoryView(BasePostsView):
         qs = qs.filter(category_id = cate_id)
         return  qs
 
-class TagView(BasePostsView):
 
+
+
+class TagView(BasePostsView):
     def get_queryset(self):
         tag_id = self.kwargs.get('tag_id')
         try:
@@ -91,6 +103,25 @@ class PostView(CommonMixin,DetailView):
     model = Post
     template_name = settings.THEME + '/blog/detail.html'
     context_object_name = 'post'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
