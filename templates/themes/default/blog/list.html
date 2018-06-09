@@ -1,0 +1,36 @@
+{% extends "./base.html" %}
+{% block content %}
+
+<ul>
+    {% if posts %}
+        {% for post in posts %}
+
+    <div class="post-element">
+				<h3 class="post-element-title">
+                    <a href="{% url 'detail' post.id %}" >{{ post.title }}</a>
+                         <!--  title :<a href="/post/{{ post.id }}" >{{ post.title }}</a><br>  -->
+                </h3>
+				<nav class="nav">
+				  分类:<a class="nav-link post-element-nav" href="#">{{post.category.name}}</a>
+				  标签:<a class="nav-link post-element-nav" href="#">{% for tag in post.tags.all %} {{ tag.name}} {% endfor %}</a>
+				  作者:<a class="nav-link post-element-nav " href="#">{{post.owner.username}}</a>
+				  创建时间:<a class="nav-link post-element-nav disabled" href="#">{{post.create_time}}</a>
+				</nav>
+
+				<div class="post-element-desc">
+
+                    {{ post.desc }}
+				</div>
+			</div>
+        {% endfor %}
+
+
+        {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">上一页</a>  {% endif %}
+        Page {{ page_obj.number }}  of {{ paginator.num_pages }}
+        {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">下一页</a>  {%  endif %}
+    {% else %}
+        Empty!!!
+    {% endif%}
+</ul>
+{% endblock %}
+

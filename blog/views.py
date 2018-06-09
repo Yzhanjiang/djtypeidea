@@ -12,7 +12,7 @@ from django.http import  Http404
 from django.core.paginator import Paginator,EmptyPage
 
 from django.views.generic import ListView,DetailView
-
+from django.conf import  settings
 
 ####################class view
 class CommonMixin(object):
@@ -57,7 +57,7 @@ class CommonMixin(object):
 
 class BasePostsView(CommonMixin,ListView):
     model = Post
-    template_name = 'blog/list.html'
+    template_name = settings.THEME + '/blog/list.html'
     context_object_name = 'posts'
     paginate_by = 2
 
@@ -85,7 +85,7 @@ class TagView(BasePostsView):
 
 class PostView(CommonMixin,DetailView):
     model = Post
-    template_name = 'blog/detail.html'
+    template_name = settings.THEME + '/blog/detail.html'
     context_object_name = 'post'
 
 

@@ -1,0 +1,155 @@
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Typeidea blog -by zhan</title>
+      <style>
+          .post-element-nav {
+              padding-top: 0;
+              padding-bottom: 0;
+              color: #428bca;
+          }
+          .post-element-title {
+              font-size: 25px;
+              border-bottom:1px solid  #ccc;
+          }
+
+          .post-element-title a {
+              color:#333;
+          }
+
+          .post-element-desc {
+              padding: 1rem;
+          }
+
+
+          .main {
+              margin-top: 25px;
+          }
+      </style>
+
+
+
+
+
+  </head>
+  <body>
+
+	<div class="container">
+		<h3>
+            Typeidea blog -- by zhan
+            <small class="text-muted">-基于Django的多人博客系统</small>
+        </h3>
+	</div>
+
+	<div class="container">
+
+		<nav class="nav" style="border-bottom:2px solid #ccc;padding-bottom: 3px">
+                {% for cate in nav_cates %}
+                <a href="{% url 'category' cate.id %}" >{{ cate.name }} </a>
+                {% endfor %}
+            test
+        </nav>
+
+	</div>
+
+
+<div class="container main">
+
+	<div class="row" >
+		<div class="col-9" >
+        {% block content %}
+
+        {% endblock%}
+
+		</div>
+
+
+
+		<div class="col-3" >
+			  <div>
+					<h3 style="border-bottom:1px solid #ccc">标题</h3>
+					<div>
+						<p>这里是公告</p>
+					</div>
+			  </div>
+
+    {% for side in side_bars %}
+            <div class="container">
+        <h4>{{ side.title }}</h4>
+        <div>
+            {% if side.display_type == 1%}
+                {% autoescape off%}
+                    {{ side.content }}
+                {% endautoescape %}
+            {% elif side.display_type == 2 %}
+                <ul>
+                    {% for post in recently_posts %}
+                        <li>{{post.title}}</li>
+                    {% endfor%}
+                </ul>
+            {% elif side.display_type == 4 %}
+                {% for comment in recently_comments %}
+                        <li>{{ comment.content}}</li>
+                {% endfor%}
+            {% endif %}
+        </div>
+        <div>
+            {{ side.display_type }}
+        </div>
+
+                </div>
+    {% endfor %}
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+
+
+
+
+	<footer class="footer">
+		<div class="container">
+			<ul class="nav">
+                {% for cate in nav_cates %}
+                    <li class="nav-item"><a href="{% url 'category' cate.id %}" >{{ cate.name }} </a></li>
+                {% endfor %}
+			</ul>
+		</div>
+
+      <div class="container">
+        <span class="text-muted">Power by typeidea</span>
+      </div>
+    </footer>
+
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
