@@ -70,9 +70,9 @@ class IndexView(BasePostsView):
        query = self.request.GET.get('query')
        print(query)
        qs = super(IndexView, self).get_queryset()
-       if not query:
-           return  qs
-       return  qs.filter(title__icontains=query) #select * from blog_post where  title ilike "%query%"
+       if  query:
+            qs =   qs.filter(title__icontains=query) #select * from blog_post where  title ilike "%query%"
+       return qs
 
    def get_context_data(self, **kwargs):
        query = self.request.GET.get('query')
@@ -85,6 +85,14 @@ class CategoryView(BasePostsView):
         qs = qs.filter(category_id = cate_id)
         return  qs
 
+
+class AuthorView(BasePostsView):
+    def get_queryset(self):
+        author_id = self.kwargs.get('author_id')
+        qs = super(AuthorView,self).get_queryset()
+        if author_id:
+            qs = qs.filter(owner_id=author_id)
+        return qs
 
 
 

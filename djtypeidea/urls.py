@@ -20,7 +20,7 @@ from django.contrib import admin
 from .custom_site import custom_site
 
 from blog.views import post_list,post_detail,index
-from blog.views import IndexView,CategoryView,TagView,PostView
+from blog.views import IndexView,CategoryView,TagView,PostView,AuthorView
 from config.views import links
 # from  config.views import  links
 
@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^tag/(?P<tag_id>\d+)/$',TagView.as_view(),name="tag"),
     url(r'^category/(?P<category_id>\d+)/', CategoryView.as_view(), name="category"),
     url(r'^post/(?P<pk>\d+)/$', PostView.as_view(), name="detail"),
+    url(r'^author/(?P<author_id>\d+)/$', AuthorView.as_view(), name="author"),
 
     #func
     # url(r'^$',post_list,name="index"),
