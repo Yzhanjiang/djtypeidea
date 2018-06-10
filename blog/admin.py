@@ -18,7 +18,7 @@ class PostAdmin(BaseOwnerAdmin):
 
     list_display = [
         'title','category','status_show','content','owner',
-        'create_time','operator'
+        'create_time','operator','pv','uv'
         ]
     list_filter = ['title','owner']
 

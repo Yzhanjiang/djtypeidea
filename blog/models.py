@@ -6,6 +6,8 @@ from  django.contrib.auth.models import User
 from django.db import  models
 import  markdown
 
+from  django.db.models import F
+
 # Create your models here.
 
 class Post(models.Model):
@@ -26,6 +28,8 @@ class Post(models.Model):
     status =  models.IntegerField(default=1,choices=STATUS_ITEMS,verbose_name="状态")
     owner = models.ForeignKey(User,verbose_name="作者")
 
+    pv = models.PositiveIntegerField(default=0,verbose_name="pv")
+    uv = models.PositiveIntegerField(default=0,verbose_name="uv")
     create_time = models.DateTimeField(auto_now_add=True,verbose_name="创建时间")
 
     def __str__(self):
@@ -36,6 +40,12 @@ class Post(models.Model):
 
     def status_show(self):
         return '当前状态:%s' % self.status
+
+    def increase_pv(self):
+        return  self.model.objects.filter(id=self.id).update(pv=F('pv') + 1)
+
+    def increase_uv(self):
+       return  self.model.objects.filter(id=self.id).update(pv=F('uv') + 1)
 
     def save(self,*args,**kwargs):
         if self.is_markdown:

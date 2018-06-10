@@ -17,6 +17,8 @@ from comment.models import Comment
 from comment.forms import CommentForm
 from comment.views import CommentShowMinix
 
+from  django.db.models import F
+
 ####################class view
 class CommonMixin(object):
     def get_category_context(self):
@@ -120,6 +122,20 @@ class PostView(CommonMixin,DetailView,CommentShowMinix):
         comments = Comment.objects.filter(target=target)
 
         return comments
+    def get(self,request,*args,**kwargs):
+
+        response = super(PostView,self).get(request,*args,**kwargs)
+        self.pv_uv()
+        return response
+
+    def pv_uv(self):
+        # self.object.pv +=1
+        # self.object.uv +=1
+        # self.object.save()
+
+        self.object.increase_pv()
+        self.object.increase_uv()
+
 
     def get_context_data(self,**kwargs):
 
