@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 
 # Create your views here.
-from  django.shortcuts import render
+from  django.shortcuts import render,redirect
 from  django.views.generic import TemplateView
 from .forms import CommentForm
 from django.conf import  settings
@@ -29,6 +29,7 @@ class CommentShowMinix(object):
 
 
 class CommentView(TemplateView):
+    http_method_names = ['POST']
     template_name =  settings.THEME + "/comment/result.html"
 
     def get(self, request, *args, **kwargs):
@@ -44,15 +45,21 @@ class CommentView(TemplateView):
 
     def post(self,request,*args,**kwargs):
         comment_form = CommentForm(request.POST)
+        target = request.POST.get('target')
         print(request.POST)
         if comment_form.is_valid():
-            comment_form.save()
+            instance = comment_form.save(commit=False)
+            instance.target = target
+            instance.save()
+
             succeed = True
+            return redirect(target)
         else:
             succeed = False
         context = {
             'succeed':succeed,
             'form':comment_form,
+            'target':target,
 
         }
         return self.render_to_response(context)

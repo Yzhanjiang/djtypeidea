@@ -2,8 +2,7 @@
 <div class="comment">
     <form class="form-group" action="/comment/" method="POST">
         {% csrf_token %}
-         <input name="target"   value="{{request.path}}"><br>
-        <!-- <input name="target" type="hidden" value="{{request.path}}"> -->
+       <input name="target" type="hidden" value="{{request.path}}">
         {{comment_from}}
     <input type="submit" value="写好了"/>
     </form>
@@ -19,7 +18,7 @@
 
             <div class="comment">
                 {{comment.content}}
-                111
+
             </div>
         </li>
         {% endfor %}

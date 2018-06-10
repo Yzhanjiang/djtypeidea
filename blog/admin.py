@@ -17,7 +17,7 @@ class PostAdmin(BaseOwnerAdmin):
     form = PostAdminForm
 
     list_display = [
-        'title','category','status','content','owner',
+        'title','category','status_show','content','owner',
         'create_time','operator'
         ]
     list_filter = ['title','owner']
@@ -38,10 +38,15 @@ class PostAdmin(BaseOwnerAdmin):
     # date_hierarchy = 'create_time'
     # list_editable = ('title',)
 
-    # fields = (
-    #     ('category','title'),
-    #     'content'
-    # )
+    fields = (
+        ('category','title'),
+        'desc',
+        'status',
+        # 'is_markdown',
+        ('content','is_markdown'),
+        # 'html',
+        'tags',
+    )
     # exclude = 'owner'
     # fieldsets = (# 跟fields互斥
     #     ('基础配置',{

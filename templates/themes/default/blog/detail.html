@@ -24,9 +24,9 @@
     </div>
 
     <article class="content">
-
-        {{post.content}}
-
+{% autoescape off %}}
+        {{post.html}}
+{%  endautoescape  %}}
     </article>
 
 
